@@ -6,9 +6,11 @@ import os
 import shutil
 import sys
 import textwrap
+import yaml
 
 from patacrep import errors
 from patacrep.songbook import open_songbook
+from patacrep.build import Songbook
 
 LOGGER = logging.getLogger("patatools.songbook")
 
@@ -49,6 +51,19 @@ def commandline_parser():
         )
     clean.set_defaults(command=do_clean)
 
+    content_items = subparsers.add_parser(
+        "content_items",
+        description="Display the content items of a songbook.",
+        help="Return the content items.",
+        )
+    content_items.add_argument(
+        'songbook',
+        metavar="SONGBOOK",
+        help=textwrap.dedent("""Songbook file to be used to look for content items."""),
+        type=filename,
+        )
+    content_items.set_defaults(command=do_content_items)
+
     return parser
 
 def do_clean(namespace):
@@ -58,6 +73,16 @@ def do_clean(namespace):
         LOGGER.info("Deleting cache directory '{}'...".format(cachedir))
         if os.path.isdir(cachedir):
             shutil.rmtree(cachedir)
+
+def do_content_items(namespace):
+    """Execute the `patatools songbook content_items` command."""
+    config = open_songbook(namespace.songbook)
+    config['_cache'] = True
+    config['_error'] = "fix"
+    songbook = Songbook(config, config['_outputname'])
+    _, content_items = songbook.get_content_items()
+    content_items = [item.file_entry() for item in content_items]
+    print(yaml.safe_dump(content_items, allow_unicode=True, default_flow_style=False))
 
 def main(args):
     """Main function: run from command line."""
