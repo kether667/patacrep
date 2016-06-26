@@ -1,4 +1,4 @@
-"""Perform operations on cache."""
+"""Perform operations on songbook."""
 
 import argparse
 import logging
@@ -10,7 +10,7 @@ import textwrap
 from patacrep import errors
 from patacrep.songbook import open_songbook
 
-LOGGER = logging.getLogger("patatools.cache")
+LOGGER = logging.getLogger("patatools.songbook")
 
 def filename(name):
     """Check that argument is an existing, readable file name.
@@ -25,8 +25,8 @@ def commandline_parser():
     """Return a command line parser."""
 
     parser = argparse.ArgumentParser(
-        prog="patatools cache",
-        description="Clean the caches related to a songbook.",
+        prog="patatools songbook",
+        description="Operations related to a songbook.",
         formatter_class=argparse.RawTextHelpFormatter,
         )
 
@@ -37,8 +37,8 @@ def commandline_parser():
     subparsers.required = True
 
     clean = subparsers.add_parser(
-        "clean",
-        description="Delete cache.",
+        "clean_cache",
+        description="Clean the caches related to a songbook.",
         help="Delete cache.",
         )
     clean.add_argument(
@@ -52,7 +52,7 @@ def commandline_parser():
     return parser
 
 def do_clean(namespace):
-    """Execute the `patatools cache clean` command."""
+    """Execute the `patatools songbook clean_cache` command."""
     for datadir in open_songbook(namespace.songbook)['_datadir']:
         cachedir = os.path.join(datadir, ".cache")
         LOGGER.info("Deleting cache directory '{}'...".format(cachedir))

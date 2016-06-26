@@ -8,7 +8,7 @@ import unittest
 
 from patacrep.files import chdir
 from patacrep.tools.__main__ import main as tools_main
-from patacrep.tools.cache.__main__ import main as cache_main
+from patacrep.tools.songbook.__main__ import main as songbook_tools_main
 from patacrep.songbook.__main__ import main as songbook_main
 
 from .. import logging_reduced
@@ -41,10 +41,10 @@ class TestCache(unittest.TestCase):
                 self.assertEqual(systemexit.code, 0)
 
     def test_clean_exists(self):
-        """Test of the "patatools cache clean" subcommand"""
+        """Test of the "patatools songbook clean_cache" subcommand"""
         for main, args in [
-                (tools_main, ["patatools", "cache", "clean", "test_cache.yaml"]),
-                (cache_main, ["patatools-cache", "clean", "test_cache.yaml"]),
+                (tools_main, ["patatools", "songbook", "clean_cache", "test_cache.yaml"]),
+                (songbook_tools_main, ["patatools-cache", "clean_cache", "test_cache.yaml"]),
             ]:
             with self.subTest(main=main, args=args):
                 # First compilation. Ensure that cache exists afterwards
@@ -63,11 +63,11 @@ class TestCache(unittest.TestCase):
                 self.assertFalse(os.path.exists(CACHEDIR))
 
     def test_clean_not_exists(self):
-        """Test of the "patatools cache clean" subcommand"""
+        """Test of the "patatools songbook clean_cache" subcommand"""
         # Clean non-existent cache
         for main, args in [
-                (tools_main, ["patatools", "cache", "clean", "test_cache.yaml"]),
-                (cache_main, ["patatools-cache", "clean", "test_cache.yaml"]),
+                (tools_main, ["patatools", "songbook", "clean_cache", "test_cache.yaml"]),
+                (songbook_tools_main, ["patatools-cache", "clean_cache", "test_cache.yaml"]),
             ]:
             with self.subTest(main=main, args=args):
                 # Clean cache
