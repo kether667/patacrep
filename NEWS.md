@@ -15,6 +15,13 @@
     * The `meta` directive is now supported: `{meta: COMMANDNAME:arg}` [#220](https://github.com/patacrep/patacrep/pull/220)
   * LaTeX songs
     * The `meta` directive is now supported: `\metacrep{COMMANDNAME}{arg}` [#220](https://github.com/patacrep/patacrep/pull/220)
+  * Patatools
+    * New command to generate the list of the content items (songs, sections...): `patatools songbook content_items <songbook>` [#232](https://github.com/patacrep/patacrep/pull/232)
+
+* Changes
+  * Patatools
+    * `patatools cache clean <songbook>` is now `patatools songbook clean_cache <songbook>`
+
 
 # patacrep 5.0.0
 
